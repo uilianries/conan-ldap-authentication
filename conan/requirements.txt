@@ -1,0 +1,2 @@
+pyldap>=2.4.28
+configparser>=3.5.0
