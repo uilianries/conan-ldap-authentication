@@ -11,5 +11,5 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
 fi
 
 conan user
-mkdir ~/.conan/data
+mkdir -p ~/.conan_server/plugins/authenticator/
 nosetests conan.test

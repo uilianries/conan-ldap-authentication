@@ -82,9 +82,9 @@ class LDAPConfigFile(object):
             default_config_file = '''
 [ldap]
 # LDAP server address
-host: ldap://127.0.0.1:389
+host: ldap://ldap.forumsys.com
 # Distinguished name (DN) of the entry
-distinguished_name: cn=$username,ou=people,dc=example,dc=com
+distinguished_name: cn=$username,dc=example,dc=com
 '''
             with open(filename, "w") as text_file:
                 text_file.write(default_config_file)
