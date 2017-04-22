@@ -122,15 +122,13 @@ class LDAPAuthenticator(object):
 
     Settings should be present in default_ldap_authentication.py, this file is in same
     """
-    def __init__(self):
-        config_file = LDAPConfigFile().path()
-        self.__conf = LDAPConfiguration(config_file)
-        self.__connection = ldap.initialize(self.__conf.host)
-
     def valid_user(self, username, password):
         result = False
         try:
-            self.__connection.simple_bind_s(self.__conf.dn_with_cn(username), password)
+            config_file = LDAPConfigFile().path()
+            conf = LDAPConfiguration(config_file)
+            connection = ldap.initialize(conf.host)
+            connection.simple_bind_s(conf.dn_with_cn(username), password)
             result = True
         except Exception as error:
             warning(str(error))
