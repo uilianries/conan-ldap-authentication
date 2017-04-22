@@ -1,4 +1,4 @@
-[![Version](https://img.shields.io/badge/version-0.1.0-orange.svg)] [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Version](https://img.shields.io/badge/version-0.1.0-orange.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Conan LDAP Authentication
 
 A LDAP authentication plugin for [Conan.io](https://conan.io)
