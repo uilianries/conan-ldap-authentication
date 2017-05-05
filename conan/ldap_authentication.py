@@ -68,8 +68,7 @@ class LDAPConfigFile(object):
         :return: Default file path
         """
         home = expanduser('~')
-        default_path = join(home, ".conan_server", "plugins", "authenticator",
-                            "ldap_authentication.conf")
+        default_path = join(home, ".conan_server", "ldap_authentication.conf")
         return getenv("CONAN_LDAP_AUTHENTICATION_CONFIG_FILE", default_path)
 
     @staticmethod
