@@ -39,6 +39,7 @@ def get_class():
 
     :return: The LDAP authenticator instance
     """
+    LDAPConfigFile()
     return LDAPAuthenticator()
 
 

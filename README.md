@@ -55,6 +55,11 @@ distinguished_name: cn=$username,ou=Users,dc=company,dc=org
 
 ```
 
+You could customize *ldap_authentication.conf* path, by CONAN_LDAP_AUTHENTICATION_CONFIG_FILE
+```shell
+$ export CONAN_LDAP_AUTHENTICATION_CONFIG_FILE=/etc/conan/cofig/ldap_authentication.conf
+```
+
 To obtain more information, how to use a custom authentication in Conan.io, read the [Authentication section](https://conanio.readthedocs.io/en/latest/server.html?highlight=authentication)
 
 ## Usage
