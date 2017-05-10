@@ -70,5 +70,14 @@ Just call conan authentication, as before
 
 Conan will use your username and password to authenticate to registered LDAP server.
 
+## Dependencies
+
+The package **pyLDAP** needs a bunch of packages installed, without these packages, the installation will fail.
+
+* python-dev
+* libldap2-dev
+* libsasl2-dev
+* libssl-dev
+
 ## License
 [MIT](LICENSE.md)
