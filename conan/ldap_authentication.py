@@ -125,6 +125,10 @@ class LDAPAuthenticator(object):
     def valid_user(self, username, password):
         result = False
         try:
+            if not username:
+                raise Exception('Empty username provided')
+            if not password:
+                raise Exception('Empty password provided')
             config_file = LDAPConfigFile().path()
             conf = LDAPConfiguration(config_file)
             connection = ldap.initialize(conf.host)
