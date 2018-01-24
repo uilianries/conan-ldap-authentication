@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/uilianries/conan-ldap-authentication.svg?branch=master)](https://travis-ci.org/uilianries/conan-ldap-authentication) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/uilianries/conan-ldap-authentication.svg?branch=master)](https://travis-ci.org/uilianries/conan-ldap-authentication)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Pypi Download](https://img.shields.io/badge/download-pypi-blue.svg)](https://pypi.python.org/pypi/conan-ldap-authentication)
 # Conan LDAP Authentication
 
 A LDAP authentication plugin for [Conan.io](https://conan.io)
@@ -69,6 +71,12 @@ Just call conan authentication, as before
     $ conan user -p my_ldap_password my_ldap_username
 
 Conan will use your username and password to authenticate to registered LDAP server.
+
+## Tests and Development
+
+To run all unit tests:
+
+    $ nosetests -v --with-coverage --cover-package=conan .
 
 ## Dependencies
 

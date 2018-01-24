@@ -56,6 +56,14 @@ distinguished_name: cn=$username,dc=example,dc=com
         authenticator = ldap_authentication.get_class()
         self.assertFalse(authenticator.valid_user(username="read-only-admin", password="foobar"))
 
+    def test_empty_password(self):
+        authenticator = ldap_authentication.get_class()
+        self.assertFalse(authenticator.valid_user(username="read-only-admin", password=None))
+
+    def test_empty_username(self):
+        authenticator = ldap_authentication.get_class()
+        self.assertFalse(authenticator.valid_user(username=None, password="password"))
+
     def __create_config_file(self, file_content):
         self.__temp_file = NamedTemporaryFile(prefix="ldap-authentication-", delete=False)
         with open(self.__temp_file.name, 'w') as file:
