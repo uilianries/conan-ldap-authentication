@@ -11,5 +11,8 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
 fi
 
 conan user
+# Validate distribution
+python setup.py sdist
+# Execute unit tests
 mkdir -p ~/.conan_server/plugins/authenticator/
-nosetests conan.test
+nosetests -v --with-coverage --cover-package=conan .
