@@ -1,38 +1,26 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import unittest
-from tempfile import NamedTemporaryFile
-from os import environ
+from os import environ, path, makedirs
 from conan import ldap_authentication
+from conan.test.configuration_file import ConfigurationFile
 """Validation for LDAP authenticator
 """
 
-
 class TestAuthentication(unittest.TestCase):
-    __test_config = '''
-[ldap]
-# LDAP server address
-host: ldap://ldap.forumsys.com
-# Distinguished name (DN) of the entry
-distinguished_name: cn=$username,dc=example,dc=com
-'''
+    @classmethod
+    def setUpClass(TestAuthentication):
+        user_home = environ.get("HOME")
+        name = path.join(user_home, '.conan_server', 'plugins', 'authentication')
+        if not path.exists(name):
+            makedirs(name=name)
 
-    __test_wrong_config = '''
-[ldap]
-# LDAP server address
-host: ldap://ldap.forumsys
-# Distinguished name (DN) of the entry
-distinguished_name: cn=$username,dc=example,dc=com
-'''
-
-    __test_invalid_config = '''
-[server]
-# LDAP server address
-host: ldap://ldap.forumsys.com
-# Distinguished name (DN) of the entry
-distinguished_name: cn=$username,dc=example,dc=com
-'''
+    @classmethod
+    def tearDownClass(TestAuthentication):
+        del environ["CONAN_LDAP_AUTHENTICATION_CONFIG_FILE"]
 
     def setUp(self):
-        self.__create_config_file(TestAuthentication.__test_config)
+        ConfigurationFile.create_valid_config()
 
     def test_valid_login(self):
         authenticator = ldap_authentication.get_class()
@@ -47,12 +35,12 @@ distinguished_name: cn=$username,dc=example,dc=com
         self.assertFalse(authenticator.valid_user(username="read-only-admin", password="foobar"))
 
     def test_invalid_server(self):
-        self.__create_config_file(TestAuthentication.__test_wrong_config)
+        ConfigurationFile.create_wrong_config()
         authenticator = ldap_authentication.get_class()
         self.assertFalse(authenticator.valid_user(username="read-only-admin", password="foobar"))
 
     def test_invalid_config(self):
-        self.__create_config_file(TestAuthentication.__test_invalid_config)
+        ConfigurationFile.create_invalid_config()
         authenticator = ldap_authentication.get_class()
         self.assertFalse(authenticator.valid_user(username="read-only-admin", password="foobar"))
 
@@ -63,9 +51,3 @@ distinguished_name: cn=$username,dc=example,dc=com
     def test_empty_username(self):
         authenticator = ldap_authentication.get_class()
         self.assertFalse(authenticator.valid_user(username=None, password="password"))
-
-    def __create_config_file(self, file_content):
-        self.__temp_file = NamedTemporaryFile(prefix="ldap-authentication-", delete=False)
-        with open(self.__temp_file.name, 'w') as file:
-            file.write(file_content)
-        environ["CONAN_LDAP_AUTHENTICATION_CONFIG_FILE"] = self.__temp_file.name

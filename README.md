@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/uilianries/conan-ldap-authentication.svg?branch=master)](https://travis-ci.org/uilianries/conan-ldap-authentication)
+[![codecov](https://codecov.io/gh/uilianries/conan-ldap-authentication/branch/master/graph/badge.svg)](https://codecov.io/gh/uilianries/conan-ldap-authentication)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Pypi Download](https://img.shields.io/badge/download-pypi-blue.svg)](https://pypi.python.org/pypi/conan-ldap-authentication)
 # Conan LDAP Authentication

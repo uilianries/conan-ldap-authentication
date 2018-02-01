@@ -1,23 +1,41 @@
+os: linux
+dist: trusty
+
 cache: pip
 language: python
 python:
   - 2.7
   - 3.6
-os: linux
-sudo: required
-dist: trusty
+
+addons:
+  apt:
+    packages:
+      - gcc-multilib
+      - g++-multilib
+      - libsasl2-dev
+      - python-dev
+      - libldap2-dev
+      - libssl-dev
 
 install:
   - chmod +x .travis/install.sh
-  - .travis/install.sh
+  - ".travis/install.sh"
+
 before_script:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
+
 script:
   - chmod +x .travis/run.sh
-  - .travis/run.sh
+  - ".travis/run.sh"
+
+after_success:
+  - codecov
 
 deploy:
   provider: pypi
   user: uilianries
   password:
-    secure: yGrLzRVZTkV9Sax7fEgJjxFBnkocZGwE5wtHy4hzaByI7SeUO3nKvDGiYESw0OnV0ri7LIZ8CauvH9ltyAkLiLZH3saV0z5c5l2f34R5vy3PoEgk1FG6Wv/HBVnYHY3d1IfzjwK9LZintIMkFkt7WYWgOR+FtaFUip81pAW8EbNe36RHms44dL74oZbvHH5fUBXIxwOxP5L+6+H3tob4YQKlP59GgxeGhv8QfpHHMEHDiwbBDeooV1aD4o1VXc2Aw/6n1rnGRELUaxz+5XwnhW5Uw+bMS6sG7GwQb00R/AOCWa4tT+fo643Hh8xtWb1dfNh+0Qcy4gkzZ7Ebwinz+skEmiS7zMWBhnuNJaJicKvUMHgOoB3Q0sqsFaEXYVVGXVh5ZTFYfQKNdASXg8G/A0cLRyFB1JKGi3McBTMs7cjvLhA3E1XZifP1S/Lx3u4tJojS8ZWgDpy9g5DvD4cefO8UZkyzO2r0Prh10EA+Z7EFn+M/hHdwahd++OzEV/L0/SAOUze1ki/SKHYdICUd3P/lqzCKF4eOadEwuqA9Rgj5Yk9A8w1adImhxc20rfIOPUk5vqReXagxg1z4pDcHa7rsmkN/XceIed/pU16H4X9IkQoXFiLjo7svm5Bak5MZl9M7KefiOLusGVOOqmIb7GhVKR4DSQPqA/SDMwWIcJY=
+    secure: m53R1xVryG63qFQ/so9EhWFRLmnmxHIImsTR03mGonKrhFTl31pdP8YAbDAaEVx+SttKNeDZH9D5fS1RaDPA0h3RZbP8nZ6nz08kUV0chaF/bQc2j5Za3XtLEqd8ZUxudQlZdqQTfRnnyXIBP9AjRo2eTRhDl7qQvwWwLxAxic3Bl/yYFrgTm8I6bsi6BJ4vOaVGfiSrItXny9oEfiPpnG5+tBmhPm910QlZxaiBIe2mfkmxRFx3UaGruXPWQ5C6g2yt++ixixKEUfMED6A1t63vBdDGTAal+iKU3Oc10afr6yi7SpCRTgDOqEXqsofqVU/llha57yKKasitI24+8eoySFVoS/r3ziW3DZTivZ/Tay4bXTQYg2ZZCDLxYGxrR+CVvz8jQPaJlN98M7kc+36h378/3cJ9CUQ3658SCNWb6JjcrTnzXjwKYUv3mo7QB5ZlRoZNHuGriKGE1XU+FZkNPt/ixwZDEVwRAD1O1ag9nmHHo1okSX9G8FrQjKixSz8jY8lAAcFizIx8s7GUa1X+O9aBy5/lnMRXU4cgV8y0NdLjHnvezz8BYegYGM8KmnpVqiEyfyPCeZhq7dNY9C0v93BeosfPsZ5boY6vK9WEYDPQrUM3fK9wA1loPhaNWHvVrg6MEwxBKHvjA/FAJTgPDwNf689AhbfMbY7wYZY=
+  on:
+    tags: true
+    condition: "$TRAVIS_PYTHON_VERSION = '2.7'"
