@@ -16,6 +16,12 @@ A LDAP authentication plugin for [Conan.io](https://conan.io)
 
 Or you can [clone this repository](http://github.com/uilianries/conan-ldap-authentication) and store its location in PYTHONPATH.
 
+**The plugin uses HOME directory as reference to be installed.**  
+Keep in mind if you are running as root or admin when install the plugin.  
+If you are root, the file is available there */root/.conan_server*  
+The motivation is because Conan server could be executed by any user on your system.  
+Each user have it own .conan_server directory.  
+
 ## Configuration
 
 To configure the LDAP authentication in Conan, you need follow two steps:
