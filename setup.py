@@ -2,14 +2,7 @@ from setuptools import setup
 from setuptools import find_packages
 from setuptools.command.install import install
 from codecs import open
-from os.path import expanduser
-from os.path import join
-from os import environ
-from os import getuid
-from os import getgid
-from os import chown
-from os.path import isdir
-from os import mkdir
+import os
 """LDAP authenticator for Conan project.
 
 """
@@ -45,13 +38,13 @@ class PostInstallCommand(install):
         :return: None
         """
         paths = ['.conan_server', 'plugins', 'authenticator']
-        conan_path = expanduser('~')
+        conan_path = os.path.expanduser('~')
         for path in paths:
-            conan_path = join(conan_path, path)
-            if not isdir(conan_path):
+            conan_path = os.path.join(conan_path, path)
+            if not os.path.isdir(conan_path):
                 self.__mkdir_sudo_user(conan_path)
         install.run(self)
-        chown(join(conan_path, 'ldap_authentication.py'), self.__get_sudo_uid(), self.__get_sudo_gid())
+        os.chown(os.path.join(conan_path, 'ldap_authentication.py'), self.__get_sudo_uid(), self.__get_sudo_gid())
 
     def __mkdir_sudo_user(self, path):
         """Create a directory and change owner if is running as sudo
@@ -59,22 +52,22 @@ class PostInstallCommand(install):
         :param path: directory path to be created
         :return: None
         """
-        mkdir(path)
-        chown(path, self.__get_sudo_uid(), self.__get_sudo_gid())
+        os.mkdir(path)
+        os.chown(path, self.__get_sudo_uid(), self.__get_sudo_gid())
 
     def __get_sudo_uid(self):
         """Get sudo UID from environment variables
 
         :return: sudo uid
         """
-        return int(environ['SUDO_UID']) if 'SUDO_UID' in environ else getuid()
+        return int(os.environ.get('SUDO_UID')) if 'SUDO_UID' in os.environ else os.getuid()
 
     def __get_sudo_gid(self):
         """Get sudo GID from environment variables
 
         :return: sudo gid
         """
-        return int(environ['SUDO_GID']) if 'SUDO_GID' in environ else getgid()
+        return int(os.environ.get('SUDO_GID')) if 'SUDO_GID' in os.environ else os.getgid()
 
 
 setup(
@@ -82,7 +75,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.2.0",
+    version="0.2.1",
 
     description='LDAP authenticator for Conan C/C++ package manager',
 
@@ -98,8 +91,9 @@ setup(
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
+        'Framework :: Conan',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
@@ -142,7 +136,7 @@ setup(
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=[('%s/.conan_server/plugins/authenticator' % expanduser('~'), ['conan/ldap_authentication.py'])],
+    data_files=[(os.path.join(os.path.expanduser('~'), '.conan_server', 'plugins', 'authenticator'), [os.path.join('conan', 'ldap_authentication.py')])],
 
     # Give access to write new files at authenticator directory
     cmdclass={'install': PostInstallCommand},

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import ldap
 from configparser import ConfigParser
 from os.path import isfile
