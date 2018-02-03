@@ -10,6 +10,15 @@ __author__ = "Uilian Ries"
 __license__ = "MIT"
 
 
+class Path(object):
+
+    @staticmethod
+    def home():
+        username = os.getenv("SUDO_USER", None)
+        home_path = '~%s' % username if username else '~'
+        return os.path.expanduser(home_path)
+
+
 class Requirements(object):
     __requirements_path = "conan/requirements.txt"
 
@@ -38,7 +47,7 @@ class PostInstallCommand(install):
         :return: None
         """
         paths = ['.conan_server', 'plugins', 'authenticator']
-        conan_path = os.path.expanduser('~')
+        conan_path = Path.home()
         for path in paths:
             conan_path = os.path.join(conan_path, path)
             if not os.path.isdir(conan_path):
@@ -75,7 +84,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.2.2",
+    version="0.2.3",
 
     description='LDAP authenticator for Conan C/C++ package manager',
 
@@ -135,7 +144,7 @@ setup(
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=[(os.path.join(os.path.expanduser('~'), '.conan_server', 'plugins', 'authenticator'), [os.path.join('conan', 'ldap_authentication.py')])],
+    data_files=[(os.path.join(Path.home(), '.conan_server', 'plugins', 'authenticator'), [os.path.join('conan', 'ldap_authentication.py')])],
 
     # Give access to write new files at authenticator directory
     cmdclass={'install': PostInstallCommand},
