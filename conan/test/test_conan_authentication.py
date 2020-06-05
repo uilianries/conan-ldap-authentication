@@ -57,19 +57,19 @@ type: users
         TestConanAuthentication.pid = subprocess.Popen(TestConanAuthentication.conan_server_name, stdout=subprocess.PIPE).pid
         time.sleep(3)
         TestConanAuthentication.conan_api, _, _ = ConanAPIV1.factory()
-        TestConanAuthentication.conan_api.remote_add(remote="local", url="http://0.0.0.0:9300/")
+        TestConanAuthentication.conan_api.remote_add("local", "http://0.0.0.0:9300/")
 
     @classmethod
     def tearDownClass(TestConanAuthentication):
         os.kill(TestConanAuthentication.pid, signal.SIGTERM)
-        TestConanAuthentication.conan_api.remote_remove(remote="local")
+        TestConanAuthentication.conan_api.remote_remove("local")
 
     def test_valid_ldap_login(self):
-        TestConanAuthentication.conan_api.user(name="read-only-admin", password="password", remote="local")
+        TestConanAuthentication.conan_api.authenticate("read-only-admin", "password", "local")
 
     def test_invalid_ldap_login(self):
         try:
-            TestConanAuthentication.conan_api.user(name="read-only-admin", password="foobar", remote="local")
+            TestConanAuthentication.conan_api.authenticate("read-only-admin", "foobar", "local")
             self.fail()
         except conans.errors.AuthenticationException as exception:
             self.assertEqual(str(exception), 'Wrong user or password. [Remote: local]')
