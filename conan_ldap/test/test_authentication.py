@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 from os import environ, path, makedirs
-from conan import ldap_authentication
-from conan.test.configuration_file import ConfigurationFile
+from conan_ldap import ldap_authentication
+from conan_ldap.test.configuration_file import ConfigurationFile
 """Validation for LDAP authenticator
 """
 

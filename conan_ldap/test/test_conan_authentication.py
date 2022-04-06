@@ -8,7 +8,7 @@ import signal
 import time
 from conans.client.conan_api import ConanAPIV1
 import conans.errors
-from conan.test.configuration_file import ConfigurationFile
+from conan_ldap.test.configuration_file import ConfigurationFile
 """Validate LDAP authentication by Conan Server
 """
 
