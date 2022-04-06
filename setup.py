@@ -3,6 +3,7 @@ from setuptools import find_packages
 from setuptools.command.install import install
 from codecs import open
 import os
+import shutil
 """LDAP authenticator for Conan project.
 
 """
@@ -53,7 +54,10 @@ class PostInstallCommand(install):
             if not os.path.isdir(conan_path):
                 self.__mkdir_sudo_user(conan_path)
         install.run(self)
-        os.chown(os.path.join(conan_path, 'ldap_authentication.py'), self.__get_sudo_uid(), self.__get_sudo_gid())
+        plugin_path = os.path.join(conan_path, 'ldap_authentication.py')
+        if not os.path.exists(plugin_path):
+            shutil.copy(os.path.join("conan", "ldap_authentication.py"), plugin_path)
+        os.chown(plugin_path, self.__get_sudo_uid(), self.__get_sudo_gid())
 
     def __mkdir_sudo_user(self, path):
         """Create a directory and change owner if is running as sudo
@@ -84,7 +88,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.3.0",
+    version="0.4.0",
 
     description='LDAP authenticator for Conan C/C++ package manager',
 

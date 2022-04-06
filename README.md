@@ -94,5 +94,12 @@ The package **pyLDAP** needs a bunch of packages installed, without these packag
 * libsasl2-dev
 * libssl-dev
 
+## Docker support
+
+If you want to run Conan server with LDAP support on Docker, you can try to Docker recipe on this repository:
+
+    docker build -t conanio/conan_server_ldap .
+    docker run conanio/conan_server_ldap
+
 ## License
 [MIT](LICENSE.md)
