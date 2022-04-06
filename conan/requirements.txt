@@ -1,3 +1,0 @@
-python-ldap>=3.2.0
-configparser>=4.0.2
-conan>=1.19.0
